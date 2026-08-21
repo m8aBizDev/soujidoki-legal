@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'ja' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }} | {{ site.title | default: 'そうじどき（Soujidoki）' }}</title>
+<meta name="description" content="{{ page.description | default: site.description }}">
+<meta name="robots" content="index, follow">
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#1f2320; --muted:#6b7269; --rule:#e2ded4;
+    --accent:#4a6b4f; --card:#ffffff; --code:#f1efe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#16181a; --fg:#e6e4de; --muted:#9aa096; --rule:#2f3336;
+      --accent:#9dc0a3; --card:#1d2022; --code:#22262a;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,system-ui,sans-serif;
+    font-size:16px; line-height:1.85;
+    word-break:normal; overflow-wrap:anywhere;
+  }
+  .wrap{max-width:46rem;margin:0 auto;padding:0 1.25rem}
+  header.site{border-bottom:1px solid var(--rule);padding:1.5rem 0 1rem;margin-bottom:2rem}
+  header.site .name{font-weight:700;font-size:1.05rem;color:var(--fg);text-decoration:none}
+  nav.site{margin-top:.65rem;font-size:.86rem;line-height:2}
+  nav.site a{color:var(--muted);text-decoration:none;margin-right:1.1rem;border-bottom:1px solid transparent}
+  nav.site a:hover,nav.site a:focus{color:var(--accent);border-bottom-color:var(--accent)}
+  nav.site a[aria-current="page"]{color:var(--fg);font-weight:600}
+  main{padding-bottom:3rem}
+  h1{font-size:1.7rem;line-height:1.4;margin:0 0 1.5rem;letter-spacing:.01em}
+  h2{font-size:1.22rem;margin:2.6rem 0 .9rem;padding-bottom:.35rem;border-bottom:1px solid var(--rule)}
+  h3{font-size:1.03rem;margin:2rem 0 .6rem}
+  h4{font-size:.97rem;margin:1.5rem 0 .5rem;color:var(--muted)}
+  p,ul,ol{margin:0 0 1.1rem}
+  ul,ol{padding-left:1.4rem}
+  li{margin:.3rem 0}
+  a{color:var(--accent)}
+  hr{border:0;border-top:1px solid var(--rule);margin:2.5rem 0}
+  strong{font-weight:700}
+  blockquote{
+    margin:1.4rem 0;padding:.9rem 1.1rem;background:var(--card);
+    border-left:3px solid var(--accent);border-radius:0 6px 6px 0;
+  }
+  blockquote p:last-child{margin-bottom:0}
+  code{background:var(--code);padding:.12em .4em;border-radius:4px;font-size:.9em}
+  table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:.94rem}
+  th,td{border:1px solid var(--rule);padding:.6rem .75rem;text-align:left;vertical-align:top}
+  th{background:var(--card);font-weight:600}
+  /* 第1列（項目名）は全幅で下限を与える。640px超でも、表示幅が狭いと
+     「販売事/業者」のように日本語が2〜3文字で折り返されて読みにくくなるため
+     （公開後に実表示で確認して追加）。 */
+  th:first-child,td:first-child{min-width:8em}
+  @media (max-width:640px){
+    body{font-size:15px}
+    /* 表は横スクロールさせる。第1列に下限幅を与えないと、日本語が1〜2文字ずつ
+       折り返されて読めなくなる（幅が縮んでスクロールも発生しない）ため下限を置く */
+    table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:normal}
+    th,td{padding:.5rem .6rem}
+    th:first-child,td:first-child{min-width:7em}
+    th:nth-child(2),td:nth-child(2){min-width:12em}
+    h1{font-size:1.45rem}
+  }
+  footer.site{
+    border-top:1px solid var(--rule);padding:1.4rem 0 3rem;
+    color:var(--muted);font-size:.84rem;line-height:1.9
+  }
+  footer.site a{color:var(--muted)}
+  .updated{margin:0}
+  .setup-alert{
+    background:#8f1d1d;color:#fff;padding:1rem 1.1rem;margin:0 0 1.5rem;
+    border-radius:6px;font-weight:700;line-height:1.7
+  }
+  .setup-alert code{background:rgba(255,255,255,.2);color:#fff}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="name" href="{{ page.root }}">{{ site.title | default: 'そうじどき（Soujidoki）' }}</a>
+    <nav class="site">
+      {%- if page.lang == 'en' -%}
+      <a href="{{ page.root }}"{% if page.nav == 'index' %} aria-current="page"{% endif %}>Home</a>
+      <a href="{{ page.root }}privacy/"{% if page.nav == 'privacy' %} aria-current="page"{% endif %} lang="ja">プライバシーポリシー</a>
+      <a href="{{ page.root }}terms/"{% if page.nav == 'terms' %} aria-current="page"{% endif %} lang="ja">利用規約</a>
+      <a href="{{ page.root }}tokushoho/"{% if page.nav == 'tokushoho' %} aria-current="page"{% endif %} lang="ja">特定商取引法に基づく表記</a>
+      <a href="{{ page.root }}privacy-en/"{% if page.nav == 'privacy-en' %} aria-current="page"{% endif %}>Privacy (English)</a>
+      {%- else -%}
+      <a href="{{ page.root }}"{% if page.nav == 'index' %} aria-current="page"{% endif %}>ホーム</a>
+      <a href="{{ page.root }}privacy/"{% if page.nav == 'privacy' %} aria-current="page"{% endif %}>プライバシーポリシー</a>
+      <a href="{{ page.root }}terms/"{% if page.nav == 'terms' %} aria-current="page"{% endif %}>利用規約</a>
+      <a href="{{ page.root }}tokushoho/"{% if page.nav == 'tokushoho' %} aria-current="page"{% endif %}>特定商取引法に基づく表記</a>
+      <a href="{{ page.root }}privacy-en/"{% if page.nav == 'privacy-en' %} aria-current="page"{% endif %} lang="en">Privacy (English)</a>
+      {%- endif -%}
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    {%- comment -%}
+      設定ファイルが読み込まれていない＝ファイルをリポジトリのルートではなく
+      1階層深い場所（例: site/ フォルダごと）にアップロードした状態。
+      この場合ページ自体は普通に生成されてしまい 404 にならないため、
+      ここで大きく警告を出さないとオーナーが事故に気づけない。
+    {%- endcomment -%}
+    {% unless site.contact_email %}
+    <p class="setup-alert">
+      ⚠ 設定ファイル <code>_config.yml</code> が読み込まれていません。<br>
+      ファイルがリポジトリの<strong>いちばん上の階層（ルート）</strong>に置かれていない可能性があります。
+      このまま公開せず、担当エージェントに「_config.yml が読み込まれていない」と伝えてください。
+    </p>
+    {% endunless %}
+    <h1>{{ page.title }}</h1>
+    {{ content }}
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    {%- if page.lang == 'en' -%}
+    <p class="updated">Last updated: {{ site.updated | default: '【未設定：UPDATED】' }}</p>
+    <p>{{ site.title | default: 'Soujidoki' }} — Contact: {{ site.contact_email | default: '【未設定：CONTACT_EMAIL】' }}</p>
+    {%- else -%}
+    <p class="updated">最終更新日：{{ site.updated | default: '【未設定：UPDATED】' }}</p>
+    <p>{{ site.title | default: 'そうじどき（Soujidoki）' }} ／ お問い合わせ：{{ site.contact_email | default: '【未設定：CONTACT_EMAIL】' }}</p>
+    {%- endif -%}
+  </div>
+</footer>
+
+</body>
+</html>
