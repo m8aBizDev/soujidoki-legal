@@ -17,10 +17,11 @@ This is the English version of the privacy policy of Soujidoki, provided for ref
 
 | Question | Soujidoki's answer |
 |---|---|
-| Rooms, tasks, completion history, settings | **Never leaves your device.** |
+| Rooms, tasks, completion history, settings | Normally **never leaves your device** (see below for the "Family Sharing" case). |
 | Name, email, phone number, or any personal identifier | **Never collected.** There is no account and no sign-up. |
 | Advertising and tracking | **None.** No ad SDK and no analytics SDK is embedded. |
-| What does leave the device | **Nothing.** The app runs entirely on-device; there is no server. |
+| What does leave the device | **Nothing goes to the developer** — there is no server. If you use the optional "Family Sharing" feature, the data you share syncs with your invitees through your own iCloud account (Section 4.3). |
+| "Family Sharing" (optional) | If you use it, the data in the household you share syncs with your invitees through your own iCloud account. **The developer cannot access it** (Section 4.3). |
 | Data export (JSON) | A local, user-initiated action. The exported file is **never sent to the developer.** |
 | Sharing with third parties | **None** — there is nothing to share. |
 
@@ -67,6 +68,16 @@ The App stores the following, created by your own use of the App, in an on-devic
 **All of this stays on your iPhone.** Nothing is transmitted to the developer or to any third party, because **the App has no server to send it to.** The developer cannot see which rooms or tasks you created, or when you cleaned.
 
 If you delete the App, this on-device data is erased by iOS. The App has no cloud backup, so if you want to keep a copy first, use the export feature described below.
+
+### 4.3 Using "Family Sharing" (かぞくで共有)
+
+The App includes an optional feature called **"Family Sharing"** that lets you share the state of your rooms and tasks with family members or housemates. Nothing is shared unless you deliberately create or join a "household" — the feature does nothing on its own.
+
+- **What syncs, and how**: When you turn on Family Sharing, the rooms, tasks, completion history, and cleaning-supply notes in the household you share — along with each member's nickname (a self-chosen in-app display name, not necessarily your real name) — sync to the devices of the people you invite, or the person who invited you, **through your own iCloud account, using Apple's CloudKit.**
+- **The developer still cannot access it**: This sync happens entirely between your and your household members' iCloud accounts and never passes through a developer server — as described in Section 4.1, there isn't one. The App's "we don't collect it" policy does not change when you use this feature. What changes is simply that your data now also travels, through your own iCloud, to people you chose to invite.
+- **If sharing ends**: If you leave a household, or the owner stops sharing it, syncing stops from that point. The device where sharing ended deletes its local copy of the shared data. Whatever data you had on your device before joining stays there and reappears once sharing ends. If you are the household owner, your own data in iCloud is unaffected by a member leaving or by you turning sharing off.
+- **If you don't use it**: Unless you use Family Sharing, the App works exactly as described in Sections 4, 4.1, and 4.2 above — entirely on-device.
+- **About iCloud**: Family Sharing runs on top of Apple's iCloud (CloudKit). How Apple itself handles data inside iCloud is governed by [Apple's own Privacy Policy](https://www.apple.com/legal/privacy/).
 
 ## 5. Data export (JSON)
 
@@ -131,6 +142,7 @@ We may update this Policy as the law or the App changes. For significant changes
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 2026-08-21 | First published version |
+| 1.1 | 2026-08-25 | Added explanation of the "Family Sharing" feature (Section 4.3; adjusted Section 0 summary) |
 
 ## Related documents
 
