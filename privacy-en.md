@@ -76,6 +76,7 @@ The App includes an optional feature called **"Family Sharing"** that lets you s
 - **What syncs, and how**: When you turn on Family Sharing, the rooms, tasks, completion history, and cleaning-supply notes in the household you share — along with each member's nickname (a self-chosen in-app display name, not necessarily your real name) — sync to the devices of the people you invite, or the person who invited you, **through your own iCloud account, using Apple's CloudKit.**
 - **The developer still cannot access it**: This sync happens entirely between your and your household members' iCloud accounts and never passes through a developer server — as described in Section 4.1, there isn't one. The App's "we don't collect it" policy does not change when you use this feature. What changes is simply that your data now also travels, through your own iCloud, to people you chose to invite.
 - **If sharing ends**: If you leave a household, or the owner stops sharing it, syncing stops from that point. The device where sharing ended deletes its local copy of the shared data. Whatever data you had on your device before joining stays there and reappears once sharing ends. If you are the household owner, your own data in iCloud is unaffected by a member leaving or by you turning sharing off.
+- **"Done for you" notifications**: When a household member completes a chore assigned to you, their device writes a short notification text (their nickname, the chore name, and the household name) into **a notification area inside your own iCloud**, and Apple's push notification system delivers it to your device. This text never passes through a developer server and the developer cannot read it. You can turn these notifications off at any time in Settings.
 - **If you don't use it**: Unless you use Family Sharing, the App works exactly as described in Sections 4, 4.1, and 4.2 above — entirely on-device.
 - **About iCloud**: Family Sharing runs on top of Apple's iCloud (CloudKit). How Apple itself handles data inside iCloud is governed by [Apple's own Privacy Policy](https://www.apple.com/legal/privacy/).
 
@@ -143,6 +144,7 @@ We may update this Policy as the law or the App changes. For significant changes
 |---|---|---|
 | 1.0 | 2026-08-21 | First published version |
 | 1.1 | 2026-08-25 | Added explanation of the "Family Sharing" feature (Section 4.3; adjusted Section 0 summary) |
+| 1.2 | 2026-09-02 | Added explanation of "Done for you" notifications (Section 4.3) |
 
 ## Related documents
 
