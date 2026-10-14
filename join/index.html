@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>そうじどき に参加する</title>
+<meta name="description" content="家族といっしょに、そうじを分担できるアプリ「そうじどき」への招待です。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="そうじどき">
+<meta property="og:title" content="そうじどき に招待されました">
+<meta property="og:description" content="家族といっしょに、そうじを分担できます。リンクを開いて「そうじどきで参加する」をタップしてください。">
+<meta property="og:url" content="https://m8abizdev.github.io/soujidoki-legal/join/">
+<meta property="og:image" content="https://m8abizdev.github.io/soujidoki-legal/join/icon.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="icon.png">
+<!--
+  そうじどき 参加ページ（2026-10-14）
+  - 招待の鍵（共有トークン）はURLの「#」より後ろ（フラグメント）で受け取る。フラグメントはブラウザが
+    サーバーへ送らないため、このページの配信元やリンクプレビューの取得には鍵が含まれない。
+  - 外部ファイル・解析・広告は一切読み込まない（同じ場所の icon.png のみ）。鍵を画面やどこかへ送ることもしない。
+  - 「そうじどきで参加する」は アプリのURL（soujidoki://join?t=…）を開くだけ。参加するかどうかはアプリの中で確認する。
+-->
+<style>
+  :root { color-scheme: light dark; --teal: #2f9e8f; --ink: #1a2b28; --sub: #5c6f6b; --bg: #f4f6f5; --card: #ffffff; --line: #e3e8e6; }
+  @media (prefers-color-scheme: dark) { :root { --ink: #eef3f2; --sub: #a9b8b4; --bg: #111615; --card: #1b2220; --line: #2a3431; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; }
+  main { max-width: 480px; margin: 0 auto; padding: 40px 16px 48px; }
+  .icon { width: 88px; height: 88px; border-radius: 20px; display: block; margin: 0 auto 16px; box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+  h1 { font-size: 22px; text-align: center; margin: 0 0 8px; }
+  .lead { text-align: center; color: var(--sub); margin: 0 0 28px; font-size: 15px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+  .button { display: block; width: 100%; text-align: center; background: var(--teal); color: #fff; text-decoration: none; font-weight: 700; font-size: 17px; padding: 16px; border-radius: 14px; border: 0; font-family: inherit; cursor: pointer; }
+  .button.secondary { background: transparent; color: var(--teal); border: 1.5px solid var(--teal); font-size: 15px; padding: 12px; }
+  .note { font-size: 13px; color: var(--sub); margin: 12px 0 0; }
+  h2 { font-size: 15px; margin: 0 0 8px; }
+  ol { padding-left: 1.3em; margin: 0; font-size: 14px; }
+  .hidden { display: none; }
+  .copied { font-size: 13px; color: var(--teal); text-align: center; margin: 8px 0 0; min-height: 1.7em; }
+  footer { text-align: center; font-size: 12px; color: var(--sub); margin-top: 24px; }
+  footer a { color: var(--sub); }
+  .check { font-size: 11px; color: var(--sub); text-align: center; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <img class="icon" src="icon.png" alt="">
+  <h1>そうじどき に参加する</h1>
+  <p class="lead">家族といっしょに、そうじを分担できます。</p>
+
+  <!-- 招待の情報があるとき -->
+  <section id="ready" class="card hidden">
+    <a id="joinButton" class="button" href="soujidoki://join">そうじどきで参加する</a>
+    <p class="note">「“そうじどき”で開きますか？」と出たら「開く」をタップ。そうじどきが開いたら、画面の案内にしたがってください。</p>
+  </section>
+
+  <section id="fallback" class="card hidden">
+    <h2>うまく開かないとき</h2>
+    <ol>
+      <li>下の「招待リンクをコピー」をタップ</li>
+      <li>そうじどきを開いて「設定 → 家族と共有 → 招待リンクで参加」</li>
+      <li>「ペースト」をタップ</li>
+    </ol>
+    <p style="margin:16px 0 0"><button id="copyButton" class="button secondary" type="button">招待リンクをコピー</button></p>
+    <p id="copied" class="copied" aria-live="polite"></p>
+  </section>
+
+  <!-- 招待の情報が読み取れないとき -->
+  <section id="missing" class="card hidden">
+    <h2>招待の情報が見つかりませんでした</h2>
+    <p class="note" style="margin-top:0">届いたメッセージのリンクを、もう一度タップしてください。それでもこの表示になるときは、メッセージを長押ししてコピーし、そうじどきの「設定 → 家族と共有 → 招待リンクで参加」に貼り付けてください。</p>
+    <p style="margin:16px 0 0"><a class="button secondary" href="soujidoki://join">そうじどきを開く</a></p>
+  </section>
+
+  <section class="card">
+    <h2>そうじどき がまだ入っていない方</h2>
+    <p class="note" style="margin-top:0">いまはテスト版のため、App Store では入手できません。招待してくれた人に、テスト版（TestFlight）の入れ方を聞いてください。入れたあと、アプリを1回開いてから、もう一度このリンクをタップしてください。</p>
+  </section>
+
+  <footer>
+    <a href="../">そうじどき</a> ・ 提供: m8a
+    <div id="check" class="check"></div>
+  </footer>
+</main>
+<script>
+(function () {
+  // 招待の鍵は "#t=<token>"（または "#<token>"）で渡される。英数字・-・_ のみを受け付ける。
+  var hash = (location.hash || "").replace(/^#/, "");
+  var token = "";
+  var m = hash.match(/(?:^|&)t=([A-Za-z0-9_-]{8,128})(?:&|$)/);
+  if (m) { token = m[1]; } else if (/^[A-Za-z0-9_-]{8,128}$/.test(hash)) { token = hash; }
+  // 外部ブラウザへの受け渡しでクエリ側に移っていても受け付ける（通常は使われない）。
+  if (!token) {
+    var q = (location.search || "").match(/[?&]t=([A-Za-z0-9_-]{8,128})(?:&|$)/);
+    if (q) { token = q[1]; }
+  }
+
+  var appURL = token ? "soujidoki://join?t=" + encodeURIComponent(token) : "";
+  if (token) {
+    document.getElementById("joinButton").href = appURL;
+    document.getElementById("ready").classList.remove("hidden");
+    document.getElementById("fallback").classList.remove("hidden");
+  } else {
+    document.getElementById("missing").classList.remove("hidden");
+  }
+
+  var copyButton = document.getElementById("copyButton");
+  var copied = document.getElementById("copied");
+  copyButton.addEventListener("click", function () {
+    var text = "https://m8abizdev.github.io/soujidoki-legal/join/#t=" + token;
+    function done(ok) { copied.textContent = ok ? "コピーしました。そうじどきで貼り付けてください" : "コピーできませんでした。メッセージを長押ししてコピーしてください"; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } else {
+      done(false);
+    }
+  });
+
+  // 確認用の1行（うまくいかないときの手がかり。招待の鍵そのものは表示しない）。
+  var ua = navigator.userAgent || "";
+  var browser = /Line\//i.test(ua) ? "LINE" : (/CriOS/i.test(ua) ? "Chrome" : (/FxiOS/i.test(ua) ? "Firefox" : (/Safari/i.test(ua) ? "Safari" : "その他")));
+  document.getElementById("check").textContent = "確認用: 招待の情報 " + (token ? "あり" : "なし") + " ・ " + browser;
+})();
+</script>
+</body>
+</html>
