@@ -87,29 +87,43 @@
 <script>
 (function () {
   // 招待の鍵は "#t=<token>"（または "#<token>"）で渡される。英数字・-・_ のみを受け付ける。
-  var hash = (location.hash || "").replace(/^#/, "");
-  var token = "";
-  var m = hash.match(/(?:^|&)t=([A-Za-z0-9_-]{8,128})(?:&|$)/);
-  if (m) { token = m[1]; } else if (/^[A-Za-z0-9_-]{8,128}$/.test(hash)) { token = hash; }
-  // 外部ブラウザへの受け渡しでクエリ側に移っていても受け付ける（通常は使われない）。
-  if (!token) {
+  // 鍵はページを開いたときだけでなく、#以降が変わったとき・戻ってきたときにも読み直す（Safariが同じタブを使い回すと、
+  // 新しい招待リンクでもページが読み込み直されず、前の招待の鍵のままアプリを開いていた＝2026-10-19 実測）。
+  function readToken() {
+    var hash = (location.hash || "").replace(/^#/, "");
+    var m = hash.match(/(?:^|&)t=([A-Za-z0-9_-]{8,128})(?:&|$)/);
+    if (m) { return m[1]; }
+    if (/^[A-Za-z0-9_-]{8,128}$/.test(hash)) { return hash; }
+    // 外部ブラウザへの受け渡しでクエリ側に移っていても受け付ける（通常は使われない）。
     var q = (location.search || "").match(/[?&]t=([A-Za-z0-9_-]{8,128})(?:&|$)/);
-    if (q) { token = q[1]; }
+    return q ? q[1] : "";
   }
 
-  var appURL = token ? "soujidoki://join?t=" + encodeURIComponent(token) : "";
-  if (token) {
-    document.getElementById("joinButton").href = appURL;
-    document.getElementById("ready").classList.remove("hidden");
-    document.getElementById("fallback").classList.remove("hidden");
-  } else {
-    document.getElementById("missing").classList.remove("hidden");
-  }
-
+  var joinButton = document.getElementById("joinButton");
   var copyButton = document.getElementById("copyButton");
   var copied = document.getElementById("copied");
+  var ua = navigator.userAgent || "";
+  var browser = /Line\//i.test(ua) ? "LINE" : (/CriOS/i.test(ua) ? "Chrome" : (/FxiOS/i.test(ua) ? "Firefox" : (/Safari/i.test(ua) ? "Safari" : "その他")));
+
+  function render() {
+    var token = readToken();
+    joinButton.href = token ? "soujidoki://join?t=" + encodeURIComponent(token) : "soujidoki://join";
+    document.getElementById("ready").classList.toggle("hidden", !token);
+    document.getElementById("fallback").classList.toggle("hidden", !token);
+    document.getElementById("missing").classList.toggle("hidden", !!token);
+    copied.textContent = "";
+    // 確認用の1行（うまくいかないときの手がかり。招待の鍵そのものは表示しない）。
+    document.getElementById("check").textContent = "確認用: 招待の情報 " + (token ? "あり" : "なし") + " ・ " + browser;
+  }
+
+  // 押した瞬間にも読み直す（念のため。表示と違う鍵でアプリを開かない）。
+  joinButton.addEventListener("click", function () {
+    var token = readToken();
+    if (token) { joinButton.href = "soujidoki://join?t=" + encodeURIComponent(token); }
+  });
+
   copyButton.addEventListener("click", function () {
-    var text = "https://m8abizdev.github.io/soujidoki-legal/join/#t=" + token;
+    var text = "https://m8abizdev.github.io/soujidoki-legal/join/#t=" + readToken();
     function done(ok) { copied.textContent = ok ? "コピーしました。そうじどきで貼り付けてください" : "コピーできませんでした。メッセージを長押ししてコピーしてください"; }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
@@ -118,10 +132,9 @@
     }
   });
 
-  // 確認用の1行（うまくいかないときの手がかり。招待の鍵そのものは表示しない）。
-  var ua = navigator.userAgent || "";
-  var browser = /Line\//i.test(ua) ? "LINE" : (/CriOS/i.test(ua) ? "Chrome" : (/FxiOS/i.test(ua) ? "Firefox" : (/Safari/i.test(ua) ? "Safari" : "その他")));
-  document.getElementById("check").textContent = "確認用: 招待の情報 " + (token ? "あり" : "なし") + " ・ " + browser;
+  window.addEventListener("hashchange", render);
+  window.addEventListener("pageshow", render);
+  render();
 })();
 </script>
 </body>
